@@ -35,8 +35,15 @@ namespace DelegatesAndEvents
             //Console.WriteLine(finalHours);
 
             var worker = new Worker();
-            worker.WorkPerformed += new EventHandler<WorkPerformedEventArgs>(Worker_WorkPerformed);
-            worker.WorkCompleted += new EventHandler(Worker_WorkCompleted);
+
+            //Attach and an Event Handler to and Event through the Event's Delegate. Adds the Handler to the Delegate's Invokation List.
+            ////Explicit syntax...
+            //worker.WorkPerformed += new EventHandler<WorkPerformedEventArgs>(Worker_WorkPerformed);
+            //worker.WorkCompleted += new EventHandler(Worker_WorkCompleted);
+            //...or equivalent statement using delegate inference. The event declaration reveals the delegate type.
+            worker.WorkPerformed += Worker_WorkPerformed;
+            worker.WorkCompleted += Worker_WorkCompleted;
+
             worker.DoWork(8, WorkType.GenerateReports);
 
             Console.Read();
