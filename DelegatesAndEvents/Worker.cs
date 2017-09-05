@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace DelegatesAndEvents
 {
-    //define delegate
-    public delegate int WorkPerformedHandler(int hours, WorkType workType);
+    ////define delegate 
+    //public delegate int WorkPerformedHandler(object sender, WorkPerformedEventArgs e);
+    //..not needed because we will use .NET provided EventHandler<T> instead. Good if you don't ever need to call the delegate directly.
 
     class Worker
     {
-        public event WorkPerformedHandler WorkPerformed;
+        public event EventHandler<WorkPerformedEventArgs> WorkPerformed;
         public event EventHandler WorkCompleted;
 
         public void DoWork(int hours, WorkType workType)
@@ -36,10 +37,10 @@ namespace DelegatesAndEvents
             ////WorkPerformed?.Invoke(hours, workType);
 
             //...or can raise an event by using the delegate, the event must be cast into its delegate type
-            var del = WorkPerformed as WorkPerformedHandler;
+            var del = WorkPerformed as EventHandler<WorkPerformedEventArgs>;
             if (del != null)
             {
-                del(hours, workType);
+                del(this,new WorkPerformedEventArgs(hours,workType));
             }
             ////but VS says this delegate invokation can be simplified
             //(WorkPerformed as WorkPerformedHandler)?.Invoke(hours, workType);
