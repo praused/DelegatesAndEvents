@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 namespace DelegatesAndEvents
 {
 
-    //define delegate
-    public delegate int WorkPerformedHandler(int hours, WorkType workType);
-
     class Program
     {
         static void Main(string[] args)
