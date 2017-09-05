@@ -36,13 +36,22 @@ namespace DelegatesAndEvents
 
             var worker = new Worker();
 
-            //Attach and an Event Handler to and Event through the Event's Delegate. Adds the Handler to the Delegate's Invokation List.
-            ////Explicit syntax...
-            //worker.WorkPerformed += new EventHandler<WorkPerformedEventArgs>(Worker_WorkPerformed);
-            //worker.WorkCompleted += new EventHandler(Worker_WorkCompleted);
-            //...or equivalent statement using delegate inference. The event declaration reveals the delegate type.
-            worker.WorkPerformed += Worker_WorkPerformed;
-            worker.WorkCompleted += Worker_WorkCompleted;
+            ////Attach and an Event Handler to and Event through the Event's Delegate. Adds the Handler to the Delegate's Invokation List.
+            //////Explicit syntax...
+            ////worker.WorkPerformed += new EventHandler<WorkPerformedEventArgs>(Worker_WorkPerformed);
+            ////worker.WorkCompleted += new EventHandler(Worker_WorkCompleted);
+            ////...or equivalent statement using delegate inference. The event declaration reveals the delegate type.
+            //worker.WorkPerformed += Worker_WorkPerformed;
+            //worker.WorkCompleted += Worker_WorkCompleted;
+            //...or use an anonymous method instead of calling a handler method. Lambdas are better though.
+            worker.WorkPerformed += delegate (object sender, WorkPerformedEventArgs e)
+            {
+                Console.WriteLine("Hours worked: " + e.Hours + " " + e.WorkType);
+            };
+            worker.WorkCompleted += delegate (object sender, EventArgs e)
+            {
+                Console.WriteLine("Worker is done");
+            };
 
             worker.DoWork(8, WorkType.GenerateReports);
 
@@ -50,15 +59,15 @@ namespace DelegatesAndEvents
 
         }
 
-        static void Worker_WorkCompleted(object sender, EventArgs e)
-        {
-            Console.WriteLine("Worker is done");
-        }
+        //static void Worker_WorkCompleted(object sender, EventArgs e)
+        //{
+        //    Console.WriteLine("Worker is done");
+        //}
 
-        static void Worker_WorkPerformed(object sender, WorkPerformedEventArgs e)
-        {
-            Console.WriteLine("Hours worked: " +e.Hours + " " + e.WorkType);
-        }
+        //static void Worker_WorkPerformed(object sender, WorkPerformedEventArgs e)
+        //{
+        //    Console.WriteLine("Hours worked: " +e.Hours + " " + e.WorkType);
+        //}
 
         //static void DoWork(WorkPerformedHandler del)
         //{
