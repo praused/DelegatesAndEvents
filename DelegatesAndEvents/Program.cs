@@ -8,7 +8,7 @@ namespace DelegatesAndEvents
 {
 
     //define delegate
-    public delegate void WorkPerformedHandler(int hours, WorkType workType);
+    public delegate int WorkPerformedHandler(int hours, WorkType workType);
 
     class Program
     {
@@ -33,7 +33,9 @@ namespace DelegatesAndEvents
             del1 += del2 + del3;
 
             ////invoke delegate to call its handler methods from its invocation list; there are multiple subscribers
-            del1(10, WorkType.GenerateReports);
+            int finalHours = del1(10, WorkType.GenerateReports);
+            //finalHours only holds the value returned by the last method invoked
+            Console.WriteLine(finalHours);
 
             Console.Read();
 
@@ -46,21 +48,24 @@ namespace DelegatesAndEvents
         }
 
         //handler method for del1 delegate instance
-        static void WorkPerformed1(int hours, WorkType workType)
+        static int WorkPerformed1(int hours, WorkType workType)
         {
             Console.WriteLine("WorkPerformed1 called " + hours.ToString());
+            return hours + 1;
         }
 
         //handler method for del2 delegate instance
-        static void WorkPerformed2(int hours, WorkType workType)
+        static int WorkPerformed2(int hours, WorkType workType)
         {
             Console.WriteLine("WorkPerformed2 called " + hours.ToString());
+            return hours + 2;
         }
 
         //handler method for del3 delegate instance
-        static void WorkPerformed3(int hours, WorkType workType)
+        static int WorkPerformed3(int hours, WorkType workType)
         {
             Console.WriteLine("WorkPerformed3 called " + hours.ToString());
+            return hours + 3;
         }
 
     }
