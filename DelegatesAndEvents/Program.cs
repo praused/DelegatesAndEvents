@@ -17,14 +17,23 @@ namespace DelegatesAndEvents
             //create delegate instance wired to a handler method
             WorkPerformedHandler del1 = new WorkPerformedHandler(WorkPerformed1);
             WorkPerformedHandler del2 = new WorkPerformedHandler(WorkPerformed2);
+            WorkPerformedHandler del3 = new WorkPerformedHandler(WorkPerformed3);
 
             ////invoke delegate to call its handler method
             //del1(5, WorkType.Golf);
             //del2(10, WorkType.GenerateReports);
 
-            //pass delegate instance to a method
+            ////pass delegate instance to a method
+            ////DoWork(del1);
             //DoWork(del1);
-            DoWork(del1);
+
+            //add multipe delegates to invocation list of multicast delegate; there are multiple subscribers
+            //del1 += del2;
+            //del1 += del3;
+            del1 += del2 + del3;
+
+            ////invoke delegate to call its handler methods from its invocation list; there are multiple subscribers
+            del1(10, WorkType.GenerateReports);
 
             Console.Read();
 
@@ -46,6 +55,12 @@ namespace DelegatesAndEvents
         static void WorkPerformed2(int hours, WorkType workType)
         {
             Console.WriteLine("WorkPerformed2 called " + hours.ToString());
+        }
+
+        //handler method for del3 delegate instance
+        static void WorkPerformed3(int hours, WorkType workType)
+        {
+            Console.WriteLine("WorkPerformed3 called " + hours.ToString());
         }
 
     }
