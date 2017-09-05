@@ -19,6 +19,7 @@ namespace DelegatesAndEvents
         {
             for (int i = 0; i < hours; i++)
             {
+                System.Threading.Thread.Sleep(1000);//pause each iteration by 1 second so we can watch it work. Never do this in real software.
                 //Call helper method to raise the event
                 OnWorkPerformed(i + 1, workType);
             }
